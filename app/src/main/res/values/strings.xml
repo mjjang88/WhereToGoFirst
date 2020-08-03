@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WhereToGoFirst</string>
+
+    <string name="add_place">장소 추가</string>
 </resources>
