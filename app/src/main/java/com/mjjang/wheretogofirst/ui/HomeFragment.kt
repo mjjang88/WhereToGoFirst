@@ -1,5 +1,6 @@
 package com.mjjang.wheretogofirst.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,15 +20,10 @@ class HomeFragment : Fragment() {
         context ?: return binding.root
 
         binding.btnAddPlace.setOnClickListener {
-            navigateToMap(it)
+            val intent = Intent(requireContext(), MapActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
-    }
-
-    fun navigateToMap(view: View) {
-        val direction =
-            HomeFragmentDirections.actionFragmentHomeToFragmentMap()
-        view.findNavController().navigate(direction)
     }
 }

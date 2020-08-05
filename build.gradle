@@ -33,6 +33,7 @@ buildscript {
         workVersion = '2.3.3'
         retrofitVersion = '2.6.2'
         converterGsonVersion = '2.6.0'
+        naverMapSdkVersion = '3.8.0'
         koinVersion = '2.1.6'
     }
     repositories {
@@ -58,6 +59,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url 'https://navercorp.bintray.com/maps'
+        }
     }
 }
 

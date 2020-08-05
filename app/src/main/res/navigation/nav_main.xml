@@ -10,17 +10,6 @@
         android:name="com.mjjang.wheretogofirst.ui.HomeFragment"
         tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_fragment_home_to_fragment_map"
-            app:destination="@id/fragment_map"/>
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/fragment_map"
-        android:name="com.mjjang.wheretogofirst.ui.MapFragment"
-        tools:layout="@layout/fragment_map">
-
     </fragment>
 
 </navigation>
