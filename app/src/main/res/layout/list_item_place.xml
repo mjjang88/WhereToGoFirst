@@ -40,6 +40,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             style="@style/TextListNormal"/>
 
+        <TextView
+            android:id="@+id/text_road_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{place.address_road}"
+            android:layout_marginTop="@dimen/margin_one_eighth"
+            app:layout_constraintTop_toBottomOf="@id/text_address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/TextListNormal"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_view_locate"
             android:layout_width="wrap_content"
