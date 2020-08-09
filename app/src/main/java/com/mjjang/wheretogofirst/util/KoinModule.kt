@@ -9,11 +9,10 @@ val appModule = module {
     /**
      * Database Module
      */
-    single { PlaceRepository() }
 
     /**
      * ViewModel Module
      */
-    viewModel { SearchPoiViewModel(get()) }
+    viewModel { SearchPoiViewModel() }
 
 }

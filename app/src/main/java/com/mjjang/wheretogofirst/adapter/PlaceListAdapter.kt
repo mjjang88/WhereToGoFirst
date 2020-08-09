@@ -1,6 +1,7 @@
 package com.mjjang.wheretogofirst.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
@@ -23,14 +24,18 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val place = getItem(position)
         (holder as PlaceViewHolder).bind(place)
+
+        holder.binding.setViewLocateBtnClickListener {
+            mViewLocateBtnClickListener?.OnButtonClick(it, place)
+        }
     }
 
     class PlaceViewHolder(
-        private val binding: ListItemPlaceBinding
+        val binding: ListItemPlaceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.setBtnClickListener {
+            binding.setClickListener {
                 Toast.makeText(MyApplication.applicationContext(), "항목 선택됨. 이름 : " + binding.place?.name + ", 주소 : " + binding.place?.address, Toast.LENGTH_LONG).show()
             }
         }
@@ -42,6 +47,15 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
             }
         }
     }
+
+    var mViewLocateBtnClickListener : OnViewLocateBtnClickListener? = null
+    fun setOnViewLocateBtnClickListener(listener: OnViewLocateBtnClickListener) {
+        mViewLocateBtnClickListener = listener
+    }
+}
+
+interface OnViewLocateBtnClickListener {
+    fun OnButtonClick(view: View, place: Place)
 }
 
 private class PlaceDiffCallback : DiffUtil.ItemCallback<Place>() {

@@ -13,6 +13,6 @@ interface RetrofitService {
     @GET("/v2/local/search/keyword.json")
     suspend fun getPlace(
         @Query("query") searchWord: String
-    ): Response<List<Place>>
+    ): Response<RetrofitManager.KakaoSearchPlaceResult>
 
 }

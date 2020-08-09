@@ -6,4 +6,6 @@
     <string name="search_place">장소, 주소 검색</string>
 
     <string name="select">선택</string>
+
+    <string name="view_locate">위치보기</string>
 </resources>

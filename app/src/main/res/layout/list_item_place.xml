@@ -5,7 +5,10 @@
 
     <data>
         <variable
-            name="btnClickListener"
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="viewLocateBtnClickListener"
             type="android.view.View.OnClickListener" />
         <variable
             name="place"
@@ -15,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_half">
+        android:padding="@dimen/margin_half"
+        android:onClick="@{clickListener}">
         
         <TextView
             android:id="@+id/text_name"
@@ -37,14 +41,14 @@
             style="@style/TextListNormal"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_select"
+            android:id="@+id/btn_view_locate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select"
+            android:text="@string/view_locate"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{btnClickListener"/>
+            android:onClick="@{viewLocateBtnClickListener}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     

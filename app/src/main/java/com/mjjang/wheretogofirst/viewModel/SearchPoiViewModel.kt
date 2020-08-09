@@ -13,10 +13,7 @@ class SearchPoiViewModel internal constructor(
 ) : ViewModel() {
 
     val searchWord: MutableLiveData<String?> = MutableLiveData("")
-    val placeList: MutableLiveData<ArrayList<Place>>().apply { value = arrayListOf()}
-    /*val placeList: LiveData<List<Place>> = Transformations.switchMap(searchWord) { word ->
-        word?.let { placeRepository.getPlaceList(it) }
-    }*/
+    val placeList = MutableLiveData<ArrayList<Place>>().apply { value = arrayListOf()}
 
     init{
         getPlaceList()
@@ -35,11 +32,15 @@ class SearchPoiViewModel internal constructor(
             try {
                 RetrofitManager.getService().getPlace(word).apply {
                     this.body()?.let {
-                        placeList.value?.addAll(it)
+                        placeList.value?.addAll(it.documents)
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        placeList.value = placeList.value
                     }
                 }
             } catch (e: Throwable) {
-
+                e.stackTrace
             }
         }
     }
