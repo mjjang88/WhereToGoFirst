@@ -1,23 +1,26 @@
 package com.mjjang.wheretogofirst.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mjjang.wheretogofirst.R
-import com.mjjang.wheretogofirst.adapter.OnViewLocateBtnClickListener
+import com.mjjang.wheretogofirst.adapter.OnPlaceListClickListener
 import com.mjjang.wheretogofirst.adapter.PlaceListAdapter
 import com.mjjang.wheretogofirst.data.Place
-import com.mjjang.wheretogofirst.databinding.ActivityMainBinding
 import com.mjjang.wheretogofirst.databinding.ActivityMapBinding
 import com.mjjang.wheretogofirst.manager.KeyboardManager
+import com.mjjang.wheretogofirst.util.INTENT_KEY_RETURN_PLACE
 import com.mjjang.wheretogofirst.viewModel.SearchPoiViewModel
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -59,8 +62,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initList() {
         val adapter = PlaceListAdapter()
-        adapter.setOnViewLocateBtnClickListener(object: OnViewLocateBtnClickListener{
-            override fun OnButtonClick(view: View, place: Place) {
+        adapter.setPlaceListClickListener(object: OnPlaceListClickListener{
+            override fun onItemClick(view: View, place: Place) {
+                onPoiSelected(place)
+            }
+
+            override fun OnViewLocateButtonClick(view: View, place: Place) {
                 val cameraUpdate = CameraUpdate.scrollTo(LatLng(place.y, place.x))
                 mNaverMap.moveCamera(cameraUpdate)
 
@@ -85,6 +92,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             marker.captionText = it.name.toString()
             marker.position = LatLng(it.y, it.x)
             marker.map = mNaverMap
+            marker.setOnClickListener { _ ->
+                onPoiSelected(it)
+                true
+            }
             markerList.add(marker)
         }
 
@@ -116,5 +127,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 false -> list_place.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun onPoiSelected(place: Place) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(place.name.toString())
+            .setMessage(R.string.select_dialog_content)
+            .setNeutralButton(R.string.select_dialog_cancel) { _, _ ->
+            }
+            .setPositiveButton(R.string.select_dialog_accept) { dialog, which ->  
+                val intent = Intent()
+                intent.putExtra(INTENT_KEY_RETURN_PLACE, place)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+            .show()
     }
 }

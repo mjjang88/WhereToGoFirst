@@ -8,4 +8,9 @@
     <string name="select">선택</string>
 
     <string name="view_locate">위치보기</string>
+    
+    <string name="select_dialog_title">장소 추가</string>
+    <string name="select_dialog_content">선택한 장소를 추가하겠습니까?</string>
+    <string name="select_dialog_cancel">아니오</string>
+    <string name="select_dialog_accept">예</string>
 </resources>
