@@ -63,4 +63,11 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
+    <style name="Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:padding">@dimen/margin_half</item>
+    </style>
+
 </resources>
