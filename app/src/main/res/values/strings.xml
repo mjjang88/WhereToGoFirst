@@ -2,6 +2,7 @@
     <string name="app_name">WhereToGoFirst</string>
 
     <string name="add_place">장소 추가</string>
+    <string name="current_location">현위치</string>
 
     <string name="search_place">장소, 주소 검색</string>
 

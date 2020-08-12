@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{viewLocateBtnClickListener}"
-            style="@style/Button"/>
+            style="@style/SmallButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     

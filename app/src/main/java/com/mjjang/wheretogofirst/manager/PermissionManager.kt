@@ -76,7 +76,7 @@ object PermissionManager {
             return "주소 미발견"
         }
 
-        return addresses[0].getAddressLine(0).toString() + "\n"
+        return addresses[0].getAddressLine(0).toString()
     }
 
     fun checkLocationServicesStatus(context: Context): Boolean{

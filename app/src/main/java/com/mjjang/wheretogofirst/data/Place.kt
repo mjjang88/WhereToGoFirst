@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 data class Place(
     @SerializedName("id")
     @Expose
-    val id : Long,
+    val id : Long?,
     @SerializedName("place_name")
     @Expose
     val name : String?,

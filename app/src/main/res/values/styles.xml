@@ -70,4 +70,13 @@
         <item name="android:padding">@dimen/margin_half</item>
     </style>
 
+    <style name="SmallButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="minHeight">0dp</item>
+    </style>
+
 </resources>

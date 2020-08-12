@@ -24,7 +24,11 @@ class HomeFragment : Fragment() {
     val IDX_PLACE_START = 0x00000
     val IDX_PLACE_VIA = 0x00001
     val IDX_PLACE_DEST = 0x00002
-    var ADD_PLACE_IDX: Int = IDX_PLACE_DEST
+    var mAddPlaceIdx: Int = IDX_PLACE_DEST
+
+    var startPlace: Place? = null
+    var viaPlace: ArrayList<Place> = ArrayList()
+    var destPlace: Place? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,17 +40,32 @@ class HomeFragment : Fragment() {
 
         PermissionManager.checkPermissionWhenOnCreate(requireActivity())
 
-        binding.btnGetLocate.setOnClickListener {
-            val gpsTracker = GpsTracker(requireContext())
-
-            val address = PermissionManager.getCurrentAddress(requireContext(), gpsTracker.getLatitude(), gpsTracker.getLongitude())
-
-            Toast.makeText(requireContext(), "현재위치 \n위도: ${gpsTracker.latitude}\n경도: ${gpsTracker.longitude}\n주소: $address", Toast.LENGTH_LONG).show()
-        }
-
-        binding.btnAddPlace.setOnClickListener {
+        binding.btnAddStartPlace.setOnClickListener {
+            mAddPlaceIdx = IDX_PLACE_START
             val intent = Intent(requireContext(), MapActivity::class.java)
             startActivityForResult(intent, PLACE_REQUEST_CODE)
+        }
+
+        binding.btnAddViaPlace.setOnClickListener {
+            mAddPlaceIdx = IDX_PLACE_VIA
+            val intent = Intent(requireContext(), MapActivity::class.java)
+            startActivityForResult(intent, PLACE_REQUEST_CODE)
+        }
+
+        binding.btnAddDestPlace.setOnClickListener {
+            mAddPlaceIdx = IDX_PLACE_DEST
+            val intent = Intent(requireContext(), MapActivity::class.java)
+            startActivityForResult(intent, PLACE_REQUEST_CODE)
+        }
+
+        binding.btnGetLocateStartPlace.setOnClickListener {
+            mAddPlaceIdx = IDX_PLACE_START
+            addItemByGetlocation()
+        }
+
+        binding.btnGetLocateDestPlace.setOnClickListener {
+            mAddPlaceIdx = IDX_PLACE_DEST
+            addItemByGetlocation()
         }
 
         return binding.root
@@ -74,8 +93,61 @@ class HomeFragment : Fragment() {
 
     fun addItem(place: Place?) {
         place?.let {
-            PlaceListView(requireContext(), layout_start_point, it)
+            when (mAddPlaceIdx) {
+                IDX_PLACE_START -> {
+                    if (startPlace != null) {
+                        layout_start_point.removeAllViews()
+                    }
+                    startPlace = it
+                    PlaceListView(requireContext(), layout_start_point, it).setPlaceItemClickListener(object: OnPlaceItemClickListener{
+                        override fun onItemClick(view: View, place: Place) {
+                            startPlace = null
+                            layout_start_point.removeAllViews()
+                        }
+                    })
+
+                }
+                IDX_PLACE_VIA -> {
+                    viaPlace.add(place)
+                    PlaceListView(requireContext(), layout_via_point, it).setPlaceItemClickListener(object: OnPlaceItemClickListener{
+                        override fun onItemClick(view: View, place: Place) {
+                            val index = viaPlace.indexOf(place)
+                            viaPlace.removeAt(index)
+                            layout_via_point.removeViewAt(index)
+                        }
+                    })
+                }
+                IDX_PLACE_DEST -> {
+                    if (destPlace != null) {
+                        layout_dest_point.removeAllViews()
+                    }
+                    destPlace = it
+                    PlaceListView(requireContext(), layout_dest_point, it).setPlaceItemClickListener(object: OnPlaceItemClickListener{
+                        override fun onItemClick(view: View, place: Place) {
+                            destPlace = null
+                            layout_dest_point.removeAllViews()
+                        }
+                    })
+                }
+                else -> {
+                }
+            }
+
         }
+    }
+
+    fun addItemByGetlocation() {
+        val gpsTracker = GpsTracker(requireContext())
+        val address = PermissionManager.getCurrentAddress(requireContext(), gpsTracker.getLatitude(), gpsTracker.getLongitude())
+
+        val place = gpsTracker.longitude?.let { it1 ->
+            gpsTracker.latitude?.let { it2 ->
+                Place(null, address, null, null, null,
+                    null, address, address, it1, it2, null, null)
+            }
+        }
+
+        addItem(place)
     }
 
     override fun onRequestPermissionsResult(
