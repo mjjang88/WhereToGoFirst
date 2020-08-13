@@ -214,6 +214,9 @@ class HomeFragment : Fragment() {
                 RetrofitManager.getOsrmService().getRoute(location).apply {
                     this.body()?.let {
                         Log.d("mjjang test", "탐색 완료, size : ${it.waypoints.size}")
+                        for (index in 1..it.waypoints.size - 2) {
+                            viaPlace[index-1].waypointIdx = it.waypoints[index].waypointIdx
+                        }
                     }
 
                     withContext(Dispatchers.Main) {
@@ -229,13 +232,13 @@ class HomeFragment : Fragment() {
 
     fun makeLocationStringByPlaceList(): String {
 
-        val location = "${startPlace!!.x},${startPlace!!.y}"
+        var location = "${startPlace!!.x},${startPlace!!.y}"
 
         for (item in viaPlace) {
-            location.plus(";${item.x},${item.y}")
+            location += ";${item.x},${item.y}"
         }
 
-        location.plus(";${destPlace!!.x},${destPlace!!.y}")
+        location += ";${destPlace!!.x},${destPlace!!.y}"
 
         return location
     }

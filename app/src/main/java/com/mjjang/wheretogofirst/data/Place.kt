@@ -42,6 +42,8 @@ data class Place(
     val url : String?,
     @SerializedName("distance")
     @Expose
-    val distance : String?
+    val distance : String?,
+
+    var waypointIdx: Int = 0
 ) : Parcelable{
 }

@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface OsrmRetrofitService {
 
-    @GET("/route/v1/driving/{location}?roundtrip=false&source=first&destination=last")
+    @GET("/trip/v1/driving/{location}?roundtrip=false&source=first&destination=last")
     suspend fun getRoute(
         @Path ("location") location: String
     ): Response<RetrofitManager.OsrmResult>

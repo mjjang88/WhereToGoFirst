@@ -10,6 +10,9 @@ data class OsrmWaypoint(
     @SerializedName("trips_index")
     @Expose
     val tripsIdx: Int,
+    @SerializedName("location")
+    @Expose
+    val location: List<Double>,
     @SerializedName("name")
     @Expose
     val name: String?,
