@@ -30,7 +30,7 @@ class SearchPoiViewModel internal constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                RetrofitManager.getService().getPlace(word).apply {
+                RetrofitManager.getKaKaoService().getPlace(word).apply {
                     this.body()?.let {
                         placeList.value?.addAll(it.documents)
                     }

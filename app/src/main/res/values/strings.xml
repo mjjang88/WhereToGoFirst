@@ -20,4 +20,6 @@
     <string name="start_point">출발지</string>
     <string name="via_point">경유지</string>
     <string name="dest_point">도착지</string>
+
+    <string name="shortest_route">빠른길 탐색</string>
 </resources>

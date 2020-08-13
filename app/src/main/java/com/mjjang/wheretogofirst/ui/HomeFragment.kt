@@ -1,21 +1,31 @@
 package com.mjjang.wheretogofirst.ui
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.databinding.FragmentHomeBinding
 import com.mjjang.wheretogofirst.manager.PermissionManager
+import com.mjjang.wheretogofirst.network.RetrofitManager
 import com.mjjang.wheretogofirst.util.GpsTracker
 import com.mjjang.wheretogofirst.util.INTENT_KEY_RETURN_PLACE
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +76,10 @@ class HomeFragment : Fragment() {
         binding.btnGetLocateDestPlace.setOnClickListener {
             mAddPlaceIdx = IDX_PLACE_DEST
             addItemByGetlocation()
+        }
+
+        binding.btnRoute.setOnClickListener {
+            showStartRouteDialog()
         }
 
         return binding.root
@@ -176,5 +190,53 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun showStartRouteDialog() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle("경로 탐색")
+            .setMessage("설정한 장소를 사용하여 최적의 경로를 탐색하시겠습니까?")
+            .setCancelable(true)
+            .setPositiveButton("시작", DialogInterface.OnClickListener { dialogInterface, i ->
+                doRouting()
+            })
+            .setNegativeButton("취소", DialogInterface.OnClickListener { dialogInterface, i ->
+                dialogInterface.cancel()
+            })
+            .show()
+    }
+
+    fun doRouting() {
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val location = makeLocationStringByPlaceList()
+                RetrofitManager.getOsrmService().getRoute(location).apply {
+                    this.body()?.let {
+                        Log.d("mjjang test", "탐색 완료, size : ${it.waypoints.size}")
+                    }
+
+                    withContext(Dispatchers.Main) {
+
+                    }
+                }
+            } catch (e: Throwable) {
+                e.stackTrace
+            }
+        }
+
+    }
+
+    fun makeLocationStringByPlaceList(): String {
+
+        val location = "${startPlace!!.x},${startPlace!!.y}"
+
+        for (item in viaPlace) {
+            location.plus(";${item.x},${item.y}")
+        }
+
+        location.plus(";${destPlace!!.x},${destPlace!!.y}")
+
+        return location
     }
 }
