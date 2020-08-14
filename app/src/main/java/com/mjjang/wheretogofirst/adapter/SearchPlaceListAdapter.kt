@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.databinding.ListItemPlaceBinding
 
-class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiffCallback()) {
+class SearchPlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(SearchPlaceDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PlaceViewHolder(
+        return SearchPlaceViewHolder(
             ListItemPlaceBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -21,7 +21,7 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val place = getItem(position)
-        (holder as PlaceViewHolder).bind(place)
+        (holder as SearchPlaceViewHolder).bind(place)
 
         holder.binding.setClickListener {
             mPlaceListClickListener?.onItemClick(it, place)
@@ -32,7 +32,7 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
         }
     }
 
-    class PlaceViewHolder(
+    class SearchPlaceViewHolder(
         val binding: ListItemPlaceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -55,7 +55,7 @@ interface OnPlaceListClickListener {
     fun OnViewLocateButtonClick(view: View, place: Place)
 }
 
-private class PlaceDiffCallback : DiffUtil.ItemCallback<Place>() {
+private class SearchPlaceDiffCallback : DiffUtil.ItemCallback<Place>() {
 
     override fun areItemsTheSame(oldItem: Place, newItem: Place): Boolean {
         return oldItem.id == newItem.id

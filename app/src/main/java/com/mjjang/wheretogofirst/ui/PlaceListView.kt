@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.mjjang.wheretogofirst.R
-import com.mjjang.wheretogofirst.adapter.OnPlaceListClickListener
 import com.mjjang.wheretogofirst.data.Place
-import com.mjjang.wheretogofirst.databinding.ViewPlaceListBinding
+import com.mjjang.wheretogofirst.databinding.ListItemHomePlaceBinding
 
 class PlaceListView @JvmOverloads constructor(
     context: Context,
@@ -25,7 +24,7 @@ class PlaceListView @JvmOverloads constructor(
     var mItemPlaceIdx = IDX_PLACE_START
 
     init {
-        val bind = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_place_list, parent, true) as ViewPlaceListBinding
+        val bind = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.list_item_home_place, parent, true) as ListItemHomePlaceBinding
         bind.place = place
 
         when (parent.id) {

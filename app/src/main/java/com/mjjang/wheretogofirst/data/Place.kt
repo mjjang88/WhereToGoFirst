@@ -1,12 +1,17 @@
 package com.mjjang.wheretogofirst.data
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "place")
 data class Place(
+    @PrimaryKey
+    var sid : Int = -1,
     @SerializedName("id")
     @Expose
     val id : Long?,
@@ -44,6 +49,7 @@ data class Place(
     @Expose
     val distance : String?,
 
+    var routeType: Int = 0,
     var waypointIdx: Int = 0
 ) : Parcelable{
 }

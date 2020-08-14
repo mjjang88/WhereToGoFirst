@@ -1,11 +1,8 @@
 package com.mjjang.wheretogofirst.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
@@ -14,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mjjang.wheretogofirst.R
 import com.mjjang.wheretogofirst.adapter.OnPlaceListClickListener
-import com.mjjang.wheretogofirst.adapter.PlaceListAdapter
+import com.mjjang.wheretogofirst.adapter.SearchPlaceListAdapter
 import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.databinding.ActivityMapBinding
 import com.mjjang.wheretogofirst.manager.KeyboardManager
-import com.mjjang.wheretogofirst.util.INTENT_KEY_RETURN_PLACE
+import com.mjjang.wheretogofirst.util.INTENT_KEY_PLACE_ROUTE_TYPE
 import com.mjjang.wheretogofirst.viewModel.SearchPoiViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -61,7 +58,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initList() {
-        val adapter = PlaceListAdapter()
+        val adapter = SearchPlaceListAdapter()
         adapter.setPlaceListClickListener(object: OnPlaceListClickListener{
             override fun onItemClick(view: View, place: Place) {
                 onPoiSelected(place)
@@ -135,10 +132,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             .setMessage(R.string.select_dialog_content)
             .setNeutralButton(R.string.select_dialog_cancel) { _, _ ->
             }
-            .setPositiveButton(R.string.select_dialog_accept) { dialog, which ->  
-                val intent = Intent()
-                intent.putExtra(INTENT_KEY_RETURN_PLACE, place)
-                setResult(Activity.RESULT_OK, intent)
+            .setPositiveButton(R.string.select_dialog_accept) { dialog, which ->
+                val routeIdx = intent.getIntExtra(INTENT_KEY_PLACE_ROUTE_TYPE, -1)
+                place.routeType = routeIdx
+                searchPoiViewModel.insertPlace(place)
                 finish()
             }
             .show()

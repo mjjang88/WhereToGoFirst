@@ -50,20 +50,22 @@
                     app:layout_constraintTop_toBottomOf="@id/text_start_point"
                     android:layout_marginTop="@dimen/margin_quarter"/>
 
-                <LinearLayout
-                    android:id="@+id/layout_start_point"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_start_point"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_start_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_quarter"
+                    tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
+                    tools:listitem="@layout/list_item_home_place"/>
 
                 <TextView
                     android:id="@+id/text_via_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/via_point"
-                    app:layout_constraintTop_toBottomOf="@id/layout_start_point"
+                    app:layout_constraintTop_toBottomOf="@id/list_start_point"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="@dimen/margin_normal"
                     style="@style/TextTitle"/>
@@ -81,20 +83,22 @@
                     app:layout_constraintTop_toBottomOf="@id/text_via_point"
                     android:layout_marginTop="@dimen/margin_quarter"/>
 
-                <LinearLayout
-                    android:id="@+id/layout_via_point"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_via_point"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_via_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_quarter"
+                    tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
+                    tools:listitem="@layout/list_item_home_place"/>
 
                 <TextView
                     android:id="@+id/text_dest_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dest_point"
-                    app:layout_constraintTop_toBottomOf="@id/layout_via_point"
+                    app:layout_constraintTop_toBottomOf="@id/list_via_point"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="@dimen/margin_normal"
                     style="@style/TextTitle"/>
@@ -122,13 +126,15 @@
                     app:layout_constraintTop_toBottomOf="@id/text_dest_point"
                     android:layout_marginTop="@dimen/margin_quarter"/>
 
-                <LinearLayout
-                    android:id="@+id/layout_dest_point"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_dest_point"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_dest_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_quarter"
+                    tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
+                    tools:listitem="@layout/list_item_home_place"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
