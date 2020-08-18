@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.data.PlaceDao
+import com.mjjang.wheretogofirst.manager.AppPreference
 import com.mjjang.wheretogofirst.network.RetrofitManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -50,8 +51,8 @@ class SearchPoiViewModel internal constructor(
 
     fun insertPlace(place: Place) {
         GlobalScope.launch(Dispatchers.IO) {
-            place.sid = placeDao.getCount()
-            placeDao.insert(place)
+            place.sid = AppPreference.getSid()
+            placeDao.insert2(place)
         }
     }
 

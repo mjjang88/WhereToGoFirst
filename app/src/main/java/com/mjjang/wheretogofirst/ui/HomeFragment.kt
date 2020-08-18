@@ -4,27 +4,32 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mjjang.wheretogofirst.adapter.HomePlaceListAdapter
+import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.databinding.FragmentHomeBinding
+import com.mjjang.wheretogofirst.manager.AppPreference
 import com.mjjang.wheretogofirst.manager.PermissionManager
-import com.mjjang.wheretogofirst.util.INTENT_KEY_PLACE_ROUTE_TYPE
-import com.mjjang.wheretogofirst.util.TYPE_PLACE_DEST
-import com.mjjang.wheretogofirst.util.TYPE_PLACE_START
-import com.mjjang.wheretogofirst.util.TYPE_PLACE_VIA
+import com.mjjang.wheretogofirst.network.RetrofitManager
+import com.mjjang.wheretogofirst.util.*
 import com.mjjang.wheretogofirst.viewModel.HomeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
 
-    private val HomeViewModel: HomeViewModel by inject()
+    private val homeViewModel: HomeViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,19 +44,19 @@ class HomeFragment : Fragment() {
         // init recycler
         val startAdapter = HomePlaceListAdapter()
         binding.listStartPoint.adapter = startAdapter
-        HomeViewModel.startPlace.observe(viewLifecycleOwner) {
+        homeViewModel.startPlace.observe(viewLifecycleOwner) {
             startAdapter.submitList(it)
         }
 
         val viaAdapter = HomePlaceListAdapter()
         binding.listViaPoint.adapter = viaAdapter
-        HomeViewModel.viaPlace.observe(viewLifecycleOwner) {
+        homeViewModel.viaPlace.observe(viewLifecycleOwner) {
             viaAdapter.submitList(it)
         }
 
         val destAdapter = HomePlaceListAdapter()
         binding.listDestPoint.adapter = destAdapter
-        HomeViewModel.destPlace.observe(viewLifecycleOwner) {
+        homeViewModel.destPlace.observe(viewLifecycleOwner) {
             destAdapter.submitList(it)
         }
 
@@ -76,11 +81,11 @@ class HomeFragment : Fragment() {
 
 
         binding.btnGetLocateStartPlace.setOnClickListener {
-            //addItemByGetlocation()
+            addItemByGetlocation(TYPE_PLACE_START)
         }
 
         binding.btnGetLocateDestPlace.setOnClickListener {
-            //addItemByGetlocation()
+            addItemByGetlocation(TYPE_PLACE_DEST)
         }
 
         binding.btnRoute.setOnClickListener {
@@ -102,17 +107,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-    /*fun addItemByGetlocation() {
+    fun addItemByGetlocation(routeType: Int) {
         val gpsTracker = GpsTracker(requireContext())
         val address = PermissionManager.getCurrentAddress(requireContext(), gpsTracker.getLatitude(), gpsTracker.getLongitude())
 
-        val place = gpsTracker.longitude?.let { it1 ->
+        gpsTracker.longitude?.let { it1 ->
             gpsTracker.latitude?.let { it2 ->
-                Place(null, address, null, null, null,
-                    null, address, address, it1, it2, null, null)
+                lifecycleScope.launch(Dispatchers.Default) {
+                    val place = Place(-1, null, address, null, null, null,
+                        null, address, address, it1, it2, null, null, routeType, 0)
+
+                    homeViewModel.insertPlace(place)
+                }
             }
         }
-    }*/
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -148,7 +157,7 @@ class HomeFragment : Fragment() {
             .setMessage("설정한 장소를 사용하여 최적의 경로를 탐색하시겠습니까?")
             .setCancelable(true)
             .setPositiveButton("시작", DialogInterface.OnClickListener { dialogInterface, i ->
-                //doRouting()
+                doRouting()
             })
             .setNegativeButton("취소", DialogInterface.OnClickListener { dialogInterface, i ->
                 dialogInterface.cancel()
@@ -156,47 +165,46 @@ class HomeFragment : Fragment() {
             .show()
     }
 
-    /*fun doRouting() {
+    fun doRouting() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val location = makeLocationStringByPlaceList()
+
+                val startPlace = homeViewModel.startPlace.value?.get(0)
+                val viaPlace = homeViewModel.viaPlace.value
+                val destPlace = homeViewModel.destPlace.value?.get(0)
+
+                var location = "${startPlace!!.x},${startPlace.y}"
+
+                if (viaPlace != null) {
+                    for (item in viaPlace) {
+                        location += ";${item.x},${item.y}"
+                    }
+                }
+
+                location += ";${destPlace!!.x},${destPlace.y}"
+
+                // start routing
                 RetrofitManager.getOsrmService().getRoute(location).apply {
                     this.body()?.let {
                         Log.d("mjjang test", "탐색 완료, size : ${it.waypoints.size}")
                         for (index in 1..it.waypoints.size - 2) {
-                            viaPlace[index-1].waypointIdx = it.waypoints[index].waypointIdx
+                            viaPlace?.get(index-1)?.waypointIdx = it.waypoints[index].waypointIdx
                         }
-                        startPlace?.waypointIdx = 0
-                        destPlace?.waypointIdx = viaPlace.size + 1
+                        startPlace.waypointIdx = 0
+                        destPlace.waypointIdx = viaPlace?.size?.plus(1) ?: it.waypoints.size
                     }
 
-                    withContext(Dispatchers.Main) {
-                        val places = ArrayList<Place>()
-                        places.add(startPlace!!)
-                        places.addAll(viaPlace)
-                        places.add(destPlace!!)
+                    val places = ArrayList<Place>()
+                    places.add(startPlace)
+                    viaPlace?.let { places.addAll(it) }
+                    places.add(destPlace)
 
-
-                    }
+                    homeViewModel.updateAll(places)
                 }
             } catch (e: Throwable) {
                 e.stackTrace
             }
         }
-
     }
-
-    fun makeLocationStringByPlaceList(): String {
-
-        var location = "${startPlace!!.x},${startPlace!!.y}"
-
-        for (item in viaPlace) {
-            location += ";${item.x},${item.y}"
-        }
-
-        location += ";${destPlace!!.x},${destPlace!!.y}"
-
-        return location
-    }*/
 }
