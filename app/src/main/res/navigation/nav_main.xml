@@ -10,6 +10,17 @@
         android:name="com.mjjang.wheretogofirst.ui.HomeFragment"
         tools:layout="@layout/fragment_home">
 
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_result"
+            app:destination="@id/fragment_result" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_result"
+        android:name="com.mjjang.wheretogofirst.ui.ResultFragment"
+        tools:layout="@layout/fragment_result">
+        
     </fragment>
 
 </navigation>

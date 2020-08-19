@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="place"
+            type="com.mjjang.wheretogofirst.data.Place" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_seq"
+            android:layout_width="@dimen/seq_text_view_width"
+            android:layout_height="match_parent"
+            android:text="@{String.valueOf(place.waypointIdx)}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Button"/>
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/text_seq"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{place.name}"
+                style="@style/TextListBig"/>
+
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{place.address}"
+                android:layout_marginTop="@dimen/margin_one_eighth"
+                style="@style/TextListNormal"/>
+
+            <TextView
+                android:id="@+id/text_road_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{place.address_road}"
+                android:layout_marginTop="@dimen/margin_one_eighth"
+                style="@style/TextListNormal"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_start_navi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/navi_route"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Divider"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

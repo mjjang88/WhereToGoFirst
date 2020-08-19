@@ -33,10 +33,8 @@ class HomeViewModel internal constructor(
         return count.await()
     }
 
-    fun updateAll(place: List<Place>) {
-        GlobalScope.launch(Dispatchers.IO) {
-            placeDao.updateAll(place)
-        }
+    suspend fun updateAll(place: List<Place>) {
+        placeDao.updateAll(place)
     }
 
     fun insertPlace(place: Place) {

@@ -11,6 +11,9 @@ interface PlaceDao {
     @Query("SELECT COUNT(*) FROM place")
     fun getCount(): Int
 
+    @Query("SELECT * FROM place ORDER BY waypointIdx asc")
+    fun getPlace(): LiveData<List<Place>>
+
     @Query("SELECT * FROM place WHERE routeType = :routeType ORDER BY sid asc")
     fun getPlaceByRouteType(routeType: Int): LiveData<List<Place>>
 

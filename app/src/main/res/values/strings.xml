@@ -22,4 +22,6 @@
     <string name="dest_point">도착지</string>
 
     <string name="shortest_route">빠른길 탐색</string>
+
+    <string name="navi_route">목적지로\n내비시작</string>
 </resources>

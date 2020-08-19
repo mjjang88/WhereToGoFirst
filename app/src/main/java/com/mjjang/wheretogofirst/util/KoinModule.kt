@@ -2,6 +2,7 @@ package com.mjjang.wheretogofirst.util
 
 import com.mjjang.wheretogofirst.data.AppDatabase
 import com.mjjang.wheretogofirst.viewModel.HomeViewModel
+import com.mjjang.wheretogofirst.viewModel.ResultViewModel
 import com.mjjang.wheretogofirst.viewModel.SearchPoiViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,4 +21,5 @@ val appModule = module {
      */
     viewModel { SearchPoiViewModel(get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { ResultViewModel(get()) }
 }

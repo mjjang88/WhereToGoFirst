@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mjjang.wheretogofirst.adapter.HomePlaceListAdapter
 import com.mjjang.wheretogofirst.data.Place
@@ -24,6 +25,7 @@ import com.mjjang.wheretogofirst.util.*
 import com.mjjang.wheretogofirst.viewModel.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
@@ -201,10 +203,19 @@ class HomeFragment : Fragment() {
                     places.add(destPlace)
 
                     homeViewModel.updateAll(places)
+
+                    withContext(Dispatchers.Main) {
+                        navigateToResult(this@HomeFragment.requireView())
+                    }
                 }
             } catch (e: Throwable) {
                 e.stackTrace
             }
         }
+    }
+
+    private fun navigateToResult(view: View) {
+        val direction = HomeFragmentDirections.actionFragmentHomeToFragmentResult()
+        view.findNavController().navigate(direction)
     }
 }
