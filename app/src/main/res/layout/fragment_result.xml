@@ -11,9 +11,21 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:padding="@dimen/margin_normal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_view_route_with_map"/>
+
+        <Button
+            android:id="@+id/btn_view_route_with_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_route_with_map"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            style="@style/Button"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

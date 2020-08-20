@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.mjjang.wheretogofirst.adapter.ResultListAdapter
+import com.mjjang.wheretogofirst.data.Place
 import com.mjjang.wheretogofirst.databinding.FragmentResultBinding
+import com.mjjang.wheretogofirst.manager.NaviIntentManager
 import com.mjjang.wheretogofirst.viewModel.ResultViewModel
 import org.koin.android.ext.android.inject
 
@@ -27,8 +29,15 @@ class ResultFragment: Fragment() {
         binding.listResult.adapter = adapter
         resultViewModel.place.observe(viewLifecycleOwner) { place ->
             adapter.submitList(place)
+            binding.btnViewRouteWithMap.setOnClickListener {
+                viewRouteInfoWithNaverMap(place)
+            }
         }
 
         return binding.root
+    }
+
+    private fun viewRouteInfoWithNaverMap(places: List<Place>) {
+        NaviIntentManager.startNaverMapWithVia(requireContext(), places)
     }
 }

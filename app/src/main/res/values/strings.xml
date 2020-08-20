@@ -24,4 +24,6 @@
     <string name="shortest_route">빠른길 탐색</string>
 
     <string name="navi_route">목적지로\n내비시작</string>
+
+    <string name="view_route_with_map">지도로 경로보기</string>
 </resources>

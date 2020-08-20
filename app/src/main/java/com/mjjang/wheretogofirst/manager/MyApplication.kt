@@ -3,6 +3,7 @@ package com.mjjang.wheretogofirst.manager
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.kakao.sdk.common.KakaoSdk
 import com.mjjang.wheretogofirst.util.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,6 +22,8 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(appModule)
         }
+
+        KakaoSdk.init(this, "57d4b991ff9a35fdff993edc8bdc4bdc")
     }
 
     companion object {
