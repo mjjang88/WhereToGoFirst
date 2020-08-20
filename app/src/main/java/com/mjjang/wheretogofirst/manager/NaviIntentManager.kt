@@ -92,7 +92,7 @@ object NaviIntentManager {
             strParam += "&"
         }
 
-        val url = "nmap://navigation?${strParam}&appname=com.mjjang.wheretogofirst"
+        val url = "nmap://route/car?${strParam}&appname=com.mjjang.wheretogofirst"
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
