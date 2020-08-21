@@ -133,6 +133,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    override fun onBackPressed() {
+        if (checkbox_view_style.isChecked) {
+            checkbox_view_style.isChecked = false
+            return
+        }
+        super.onBackPressed()
+    }
+
     private fun onPoiSelected(place: Place) {
         MaterialAlertDialogBuilder(this)
             .setTitle(place.name.toString())
