@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_half">
 
         <TextView
             android:id="@+id/text_seq"
@@ -21,7 +22,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Button"/>
+            style="@style/TextTitle"/>
 
         <LinearLayout
             android:id="@+id/layout_content"
@@ -68,8 +69,9 @@
             style="@style/ImageButton"/>
 
         <View
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Divider"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_content"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/margin_half"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -30,4 +30,6 @@
 
     <string name="view_list">목록보기</string>
     <string name="view_map">지도보기</string>
+
+    <string name="recom_route">추천 경로</string>
 </resources>

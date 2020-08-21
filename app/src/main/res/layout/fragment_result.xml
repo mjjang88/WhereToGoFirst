@@ -8,13 +8,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/recom_route"
+                android:layout_marginLeft="@dimen/margin_normal"
+                style="@style/TextTitle"/>
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="@dimen/margin_normal"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_normal"
+            android:paddingBottom="@dimen/margin_normal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_title"
             app:layout_constraintBottom_toTopOf="@id/btn_view_route_with_map"/>
 
         <Button
@@ -23,8 +42,6 @@
             android:layout_height="wrap_content"
             android:text="@string/view_route_with_map"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
             style="@style/Button"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
