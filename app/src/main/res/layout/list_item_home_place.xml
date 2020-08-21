@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_quarter">
+        android:layout_marginTop="@dimen/margin_half">
 
         <TextView
             android:id="@+id/text_name"
@@ -66,7 +66,7 @@
 
         <View style="@style/Divider"
             app:layout_constraintTop_toBottomOf="@id/text_road_address"
-            android:layout_marginTop="@dimen/margin_quarter"/>
+            android:layout_marginTop="@dimen/margin_half"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

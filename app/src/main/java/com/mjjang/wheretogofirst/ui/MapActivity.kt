@@ -103,7 +103,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initEditText() {
-        edit_input_search_word.setOnEditorActionListener { v, actionId, event ->
+        edit_search_word.setOnEditorActionListener { v, actionId, event ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     searchPoiViewModel.searchWord.value = v.text.toString()
@@ -115,13 +115,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 else -> false
             }
         }
+        edit_search_word.requestFocus()
     }
 
     private fun initViewStyleCheckBox() {
         checkbox_view_style.setOnCheckedChangeListener { buttonView, isChecked ->
             when (isChecked) {
-                true -> list_place.visibility = View.GONE
-                false -> list_place.visibility = View.VISIBLE
+                true -> {
+                    list_place.visibility = View.GONE
+                    buttonView.text = getString(R.string.view_list)
+                }
+                false -> {
+                    list_place.visibility = View.VISIBLE
+                    buttonView.text = getString(R.string.view_map)
+                }
             }
         }
     }

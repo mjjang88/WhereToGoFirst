@@ -32,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/add_place"
+                    android:drawableLeft="@drawable/ic_baseline_add_location_24"
                     app:layout_constraintBottom_toBottomOf="@id/text_start_point"
                     app:layout_constraintRight_toRightOf="parent"
                     style="@style/SmallButton"/>
@@ -41,6 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/current_location"
+                    android:drawableLeft="@drawable/ic_baseline_my_location_24"
                     app:layout_constraintBottom_toBottomOf="@id/text_start_point"
                     app:layout_constraintRight_toLeftOf="@id/btn_add_start_place"
                     android:layout_marginRight="@dimen/margin_half"
@@ -48,7 +50,7 @@
 
                 <View style="@style/Divider"
                     app:layout_constraintTop_toBottomOf="@id/text_start_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_half"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_start_point"
@@ -56,7 +58,7 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_start_point"
-                    android:layout_marginTop="@dimen/margin_quarter"
+                    android:layout_marginTop="@dimen/margin_half"
                     tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
                     tools:listitem="@layout/list_item_home_place"/>
 
@@ -67,7 +69,7 @@
                     android:text="@string/via_point"
                     app:layout_constraintTop_toBottomOf="@id/list_start_point"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_double"
                     style="@style/TextTitle"/>
 
                 <Button
@@ -75,13 +77,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/add_place"
+                    android:drawableLeft="@drawable/ic_baseline_add_location_24"
                     app:layout_constraintBottom_toBottomOf="@id/text_via_point"
                     app:layout_constraintRight_toRightOf="parent"
                     style="@style/SmallButton"/>
 
                 <View style="@style/Divider"
                     app:layout_constraintTop_toBottomOf="@id/text_via_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_half"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_via_point"
@@ -89,7 +92,7 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_via_point"
-                    android:layout_marginTop="@dimen/margin_quarter"
+                    android:layout_marginTop="@dimen/margin_half"
                     tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
                     tools:listitem="@layout/list_item_home_place"/>
 
@@ -100,7 +103,7 @@
                     android:text="@string/dest_point"
                     app:layout_constraintTop_toBottomOf="@id/list_via_point"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_double"
                     style="@style/TextTitle"/>
 
                 <Button
@@ -108,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/add_place"
+                    android:drawableLeft="@drawable/ic_baseline_add_location_24"
                     app:layout_constraintBottom_toBottomOf="@id/text_dest_point"
                     app:layout_constraintRight_toRightOf="parent"
                     style="@style/SmallButton"/>
@@ -117,6 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/current_location"
+                    android:drawableLeft="@drawable/ic_baseline_my_location_24"
                     app:layout_constraintBottom_toBottomOf="@id/text_dest_point"
                     app:layout_constraintRight_toLeftOf="@id/btn_add_dest_place"
                     android:layout_marginRight="@dimen/margin_half"
@@ -124,7 +129,7 @@
 
                 <View style="@style/Divider"
                     app:layout_constraintTop_toBottomOf="@id/text_dest_point"
-                    android:layout_marginTop="@dimen/margin_quarter"/>
+                    android:layout_marginTop="@dimen/margin_half"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_dest_point"
@@ -132,7 +137,7 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_dest_point"
-                    android:layout_marginTop="@dimen/margin_quarter"
+                    android:layout_marginTop="@dimen/margin_half"
                     tools:context="com.mjjang.wheretogofirst.ui.MainActivity"
                     tools:listitem="@layout/list_item_home_place"/>
 
@@ -146,8 +151,6 @@
             android:layout_height="wrap_content"
             android:text="@string/shortest_route"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
             style="@style/Button"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

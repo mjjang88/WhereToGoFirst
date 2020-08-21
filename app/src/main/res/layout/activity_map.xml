@@ -14,51 +14,50 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_search_word"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/checkbox_view_style"
-            android:padding="@dimen/margin_normal"
-            android:hint="@string/search_place">
+            android:orientation="horizontal"
+            android:background="?attr/colorSurface"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_input_search_word"
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edit_search_word"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="?attr/colorSurface"
-                android:backgroundTintMode="add"
+                android:layout_weight="1"
+                android:hint="@string/search_place"
                 android:inputType="text"
-                android:imeOptions="actionSearch"/>
+                android:imeOptions="actionSearch"
+                android:layout_marginLeft="@dimen/margin_normal"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <CheckBox
+                android:id="@+id/checkbox_view_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/btn_view_style_icon_selector"
+                android:text="@string/view_map"
+                android:layout_marginTop="@dimen/margin_half"
+                android:layout_marginBottom="@dimen/margin_half"
+                android:layout_marginLeft="@dimen/margin_half"
+                android:layout_marginRight="@dimen/margin_normal"/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_place"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="?attr/colorSurface"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
-            app:layout_constraintTop_toBottomOf="@id/edit_search_word"
+            android:paddingLeft="@dimen/margin_half"
+            android:paddingRight="@dimen/margin_half"
+            app:layout_constraintTop_toBottomOf="@id/layout_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:context="com.mjjang.wheretogofirst.ui.MapActivity"
             tools:listitem="@layout/list_item_place" />
-
-        <CheckBox
-            android:id="@+id/checkbox_view_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/btn_view_style_icon_selector"
-            android:background="?attr/colorSurface"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/edit_search_word"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
