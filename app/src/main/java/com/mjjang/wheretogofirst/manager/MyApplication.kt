@@ -22,6 +22,8 @@ class MyApplication : Application() {
         }
 
         KakaoSdk.init(this, "57d4b991ff9a35fdff993edc8bdc4bdc")
+
+        VersionManager.doVersionCheck(this)
     }
 
     companion object {

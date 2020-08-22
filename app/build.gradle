@@ -75,6 +75,7 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-ext:$rootProject.koinVersion"
     implementation "com.kakao.sdk:v2-navi:$rootProject.kakaoVersion"
+    implementation "org.jsoup:jsoup:$rootProject.jsoupVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

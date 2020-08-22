@@ -36,6 +36,7 @@ buildscript {
         naverMapSdkVersion = '3.8.0'
         koinVersion = '2.1.6'
         kakaoVersion = '2.0.0'
+        jsoupVersion = '1.13.1'
     }
     repositories {
         google()
