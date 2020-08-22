@@ -3,6 +3,7 @@ package com.mjjang.wheretogofirst.ui
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
@@ -78,6 +79,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         searchPoiViewModel.placeList.observe(this) { places ->
             adapter.submitList(places.toList())
             updateMapMarker(places)
+
+            if (places.isNullOrEmpty() && !edit_search_word.text.isNullOrBlank()) {
+                Toast.makeText(this@MapActivity, "검색결과가 없습니다", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
