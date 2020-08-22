@@ -29,6 +29,9 @@ interface PlaceDao {
     @Delete
     suspend fun delete(place: Place)
 
+    @Query("DELETE FROM place")
+    suspend fun deleteAll()
+
     @Update
     suspend fun updateAll(place: List<Place>)
 

@@ -43,4 +43,8 @@ class HomeViewModel internal constructor(
             placeDao.insert2(place)
         }
     }
+
+    suspend fun deleteAll() {
+        placeDao.deleteAll()
+    }
 }

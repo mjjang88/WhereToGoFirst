@@ -39,7 +39,7 @@
         <Button
             android:id="@+id/btn_view_route_with_map"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/bottom_btn_height"
             android:text="@string/view_route_with_map"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/Button"/>

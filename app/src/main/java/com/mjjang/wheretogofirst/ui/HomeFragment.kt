@@ -94,6 +94,10 @@ class HomeFragment : Fragment() {
             showStartRouteDialog()
         }
 
+        binding.btnDeleteAll.setOnClickListener {
+            deletePlaceAll()
+        }
+
         return binding.root
     }
 
@@ -217,5 +221,21 @@ class HomeFragment : Fragment() {
     private fun navigateToResult(view: View) {
         val direction = HomeFragmentDirections.actionFragmentHomeToFragmentResult()
         view.findNavController().navigate(direction)
+    }
+
+    private fun deletePlaceAll() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle("장소 모두 삭제")
+            .setMessage("설정된 장소를 모두 삭제 하시겠습니까?")
+            .setCancelable(true)
+            .setPositiveButton("예", DialogInterface.OnClickListener { dialogInterface, i ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    homeViewModel.deleteAll()
+                }
+            })
+            .setNegativeButton("아니오", DialogInterface.OnClickListener { dialogInterface, i ->
+                dialogInterface.cancel()
+            })
+            .show()
     }
 }
