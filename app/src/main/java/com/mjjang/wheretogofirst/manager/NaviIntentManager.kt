@@ -1,17 +1,17 @@
 package com.mjjang.wheretogofirst.manager
 
-import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kakao.sdk.navi.NaviClient
 import com.kakao.sdk.navi.model.CoordType
 import com.kakao.sdk.navi.model.Location
 import com.kakao.sdk.navi.model.NaviOptions
 import com.mjjang.wheretogofirst.data.Place
-import java.lang.StringBuilder
 
 
 object NaviIntentManager {
@@ -21,7 +21,20 @@ object NaviIntentManager {
             `package` = "com.skt.skaf.l001mtm091"
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        context.startActivity(intent)
+
+        val list: List<ResolveInfo> =
+            context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        if (list == null || list.isEmpty()) {
+            MaterialAlertDialogBuilder(context)
+                .setTitle("미 설치 안내")
+                .setMessage("TMap이 미설치 되어 있습니다.")
+                .setCancelable(true)
+                .setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+                })
+                .show()
+        } else {
+            context.startActivity(intent)
+        }
     }
 
     fun startTmapCommonNavi(context: Context, place: Place) {
@@ -29,7 +42,14 @@ object NaviIntentManager {
             `package` = "com.skt.tmap.ku"
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        context.startActivity(intent)
+
+        val list: List<ResolveInfo> =
+            context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        if (list == null || list.isEmpty()) {
+            showInstallAppDialog(context, "티맵 (공용앱)", "market://details?id=com.skt.tmap.ku")
+        } else {
+            context.startActivity(intent)
+        }
     }
 
     fun startNaverNavi(context: Context, place: Place) {
@@ -42,12 +62,7 @@ object NaviIntentManager {
         val list: List<ResolveInfo> =
             context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         if (list == null || list.isEmpty()) {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=com.nhn.android.nmap")
-                )
-            )
+            showInstallAppDialog(context, "네이버", "market://details?id=com.nhn.android.nmap")
         } else {
             context.startActivity(intent)
         }
@@ -63,12 +78,7 @@ object NaviIntentManager {
                 )
             )
         } else {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=com.locnall.KimGiSa")
-                )
-            )
+            showInstallAppDialog(context, "카카오내비", "market://details?id=com.locnall.KimGiSa")
         }
     }
 
@@ -100,14 +110,28 @@ object NaviIntentManager {
         val list: List<ResolveInfo> =
             context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         if (list == null || list.isEmpty()) {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=com.nhn.android.nmap")
-                )
-            )
+            showInstallAppDialog(context, "네이버", "market://details?id=com.nhn.android.nmap")
         } else {
             context.startActivity(intent)
         }
+    }
+
+    fun showInstallAppDialog(context: Context, appName: String, uri: String) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle("$appName 앱 설치 안내")
+            .setMessage("Play 스토어로 이동하여 설치하시겠습니까?")
+            .setCancelable(true)
+            .setPositiveButton("예") { _, _ ->
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(uri)
+                    )
+                )
+            }
+            .setNegativeButton("아니오") { dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+            .show()
     }
 }
